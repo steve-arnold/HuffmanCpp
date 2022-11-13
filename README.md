@@ -35,8 +35,7 @@ At both stages a print of the code table is made.
 This program build on C++ version 14 under Visual Studio 2022.<br>
 Error checking is minimal.
 
-
-##Source code
+## Source code
 
 This repository contains the following source code and data files:
 
