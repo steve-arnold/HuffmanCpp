@@ -1,9 +1,8 @@
 # The Huffman Coding Algorithm
 Huffman Coding is a method of constructing minimum redundancy codes. The purpose is to reduce the size of a text file. 
-It is described by its author David A. Huffman as -
+It is described by its author David A. Huffman as -<br>
 "An optimum method of coding an ensemble of messages consisting of a finite number of members is developed. A
-minimum-redundancy code is one constructed in such a way that the
-average number of coding digits per message is minimized."
+minimum-redundancy code is one constructed in such a way that the average number of coding digits per message is minimized."
 
 ## Encoding process
 
@@ -26,15 +25,15 @@ average number of coding digits per message is minimized."
 
 ## Test Program
 
-The main() function is a test program which takes a file name from the user. This file is then compressed into a file with the same name and .cmp extension.
-This file is then expanded into "uncompressed.txt".
+The main() function is a test program which takes a file name from the user. This file is then compressed into a file with the same name and .cmp extension.<br>
+This file is then expanded into "uncompressed.txt".<br>
 
 At both stages a print of the code table is made.
 
 ## Notes
 
-This program build on C++ version 14 under Visual Studio 2022
-Error checking us minimal
+This program build on C++ version 14 under Visual Studio 2022.<br>
+Error checking is minimal.
 
 
 ##Source code
