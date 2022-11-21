@@ -31,7 +31,7 @@ This file is then expanded into "uncompressed.txt".<br>
 At both stages a print of the code table is made.
 
 ## Notes
-Uses features available in C++17 or later.<br>
+
 This program build on C++ version 14 under Visual Studio 2022.<br>
 Error checking is minimal.
 
@@ -39,7 +39,7 @@ Error checking is minimal.
 
 This repository contains the following source code and data files:
 
-* `huffman.cpp` - C++ programming language implementation.
-* `huffman.h`   - C++ header file.
-* `main.cpp`    - C++ programming language test program.
+* `huffman.cpp` - A C++ programming language implementation.
+* `huffman.h`   - A C++ header file.
+* `main.cpp`    - A C++ programming language test program.
 * `12mb.txt`    - A text file for testing. (This code has been tested with a 300Mbyte text file)

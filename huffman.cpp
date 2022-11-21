@@ -37,9 +37,8 @@ bool HuffmanCode::GrowHuffmanTree()
 
 	// For each character create a leaf node and insert each leaf node in the heap.
 	// Traverse the map
-	for (auto it = cbegin(symbolmap); it != cend(symbolmap); ++it)
-	{
-		minheap.push(new TreeNode(it->first, it->second, true));
+	for (const auto& it : symbolmap) {
+		minheap.push(new TreeNode(it.first, it.second, true));
 	}
 
 	// Iterate while size of min heap doesn't become 1
@@ -53,8 +52,8 @@ bool HuffmanCode::GrowHuffmanTree()
 		minheap.pop();
 
 		// Create a new internal node having frequency equal to the sum of
-		// two extracted nodes.Assign '\0' to this node and make the two extracted
-		// node as left and right children of this new node.Add this node to the
+		// two extracted nodes.Assign symbol '\0' to this node and make the two extracted
+		// nodes as left and right children of this new node. Add this node to the
 		// heap. By default 'leaf' will be false marking it as an internal node.
 		TreeNode *tmp = new TreeNode('\0', leftpointer->weight + rightpointer->weight);
 		tmp->leftpointer = leftpointer;
@@ -62,12 +61,12 @@ bool HuffmanCode::GrowHuffmanTree()
 		minheap.push(tmp);
 	}
 	MakeCodesFromTree();
-	SortTuples();
+	SortCodeTable();
 
 	return true;
 }
 
-// Write file tag, active character count, total character count and contents of charactermap to file
+// Write file tag, active symbol count, total character count and contents of charactermap to file
 void HuffmanCode::WriteCompressedFileHeader(std::ofstream &fout)
 {
 	// Write the header verification tag and the character counts
@@ -75,18 +74,17 @@ void HuffmanCode::WriteCompressedFileHeader(std::ofstream &fout)
 	fout.write((const char *)&alphabetcount, sizeof(alphabetcount));
 	fout.write((const char *)&totalcharacters, sizeof(totalcharacters));
 
-	// Write the character and weights map to the file
+	// Write the symbol and weights map to the file
 	// This data is used to rebuild the Huffman tree for the decode
 
 	// Iterate over the map until end.
-	for (auto it = cbegin(symbolmap); it != cend(symbolmap); ++it)
-	{
-		// Accessing KEY from element pointed by it.
-		char word = it->first;
-		fout.write((const char *)&word, sizeof(word));
-		// Accessing VALUE from element pointed by it.
-		int count = it->second;
-		fout.write((const char *)&count, sizeof(count));
+	for (const auto& it : symbolmap) {
+		// Accessing KEY (symbol) from element pointed by it.
+		char symbol = it.first;
+		fout.write((const char*)&symbol, sizeof(symbol));
+		// Accessing VALUE (weight) from element pointed by it.
+		int weight = it.second;
+		fout.write((const char*)&weight, sizeof(weight));
 	}
 };
 
@@ -147,8 +145,9 @@ bool HuffmanCode::ReadCompressedFileHeader(std::ifstream &fin)
 	// Read the counters from the file into variables
 	fin.read(reinterpret_cast<char *>(&alphabetcount), sizeof(alphabetcount));
 	fin.read(reinterpret_cast<char *>(&totalcharacters), sizeof(totalcharacters));
-	// Read the character map from the file header and construct symbolmap
-	ClearCharacterMap();
+	
+	// Read the symbol and weight data and construct symbolmap
+	ClearSymbolMap();
 	char tempsymbol = 0;
 	int tempcount = 0;
 	for (unsigned int count = 0; count < alphabetcount; count++)
@@ -207,7 +206,7 @@ void HuffmanCode::ReadCompressedFile(std::ifstream &fin, std::ofstream &fout)
 }
 
 // Clear character map
-void HuffmanCode::ClearCharacterMap()
+void HuffmanCode::ClearSymbolMap()
 {
 	symbolmap = {};
 };
@@ -219,7 +218,7 @@ void HuffmanCode::ClearHuffmanTree()
 };
 
 // Clear all tuples
-void HuffmanCode::ClearTuples()
+void HuffmanCode::ClearCodeTable()
 {
 	codetable = {};
 };
@@ -273,7 +272,7 @@ bool sortbysec(const tuple<char, int, string> &a, const tuple<char, int, string>
 }
 
 // Sort tuple based on symbol weight
-void HuffmanCode::SortTuples()
+void HuffmanCode::SortCodeTable()
 {
 	sort(codetable.begin(), codetable.end(), sortbysec);
 }
@@ -281,9 +280,9 @@ void HuffmanCode::SortTuples()
 // Print Huffman Codes
 void HuffmanCode::PrintCodeTable()
 {
-	for (auto  it = codetable.cbegin(); it != codetable.cend(); ++it)
+	for (const auto& it : codetable) 
 	{
-		cout << std::get<0>(*it) << "\t: " << std::get<1>(*it) << "\t: " << std::get<2>(*it) << endl;
+		cout << std::get<0>(it) << "\t: " << std::get<1>(it) << "\t: " << std::get<2>(it) << endl;
 	}
 }
 
@@ -318,10 +317,10 @@ unsigned long int HuffmanCode::GetTotalCharacters()
 unsigned long long int HuffmanCode::GetTotalCodedBits()
 {
 	size_t totalbits = 0;
-	for (auto it = codetable.cbegin(); it < codetable.cend(); ++it)
+	for (const auto& it : codetable)
 	{
 		// multiply number of times symbol appears by the number of bits in the prefix code
-		totalbits += (std::get<1>(*it) * (std::get<2>(*it)).length());
+		totalbits += (std::get<1>(it) * (std::get<2>(it)).length());
 	}
 	return totalbits;
 };

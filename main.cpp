@@ -40,7 +40,7 @@ int main()
 	fout.close();
 
 	// Reset the file date
-	tree.ClearTuples();
+	tree.ClearCodeTable();
 	tree.ClearHuffmanTree();
 	// Open compressed file
 	fin.open(outputfile, ios::binary);

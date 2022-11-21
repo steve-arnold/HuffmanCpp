@@ -42,9 +42,9 @@ public:
 	bool ExpandFile(std::ifstream &fin, std::ofstream &fout);
 	unsigned long int MapSymbols(std::ifstream &);
 	bool GrowHuffmanTree();
-	void ClearCharacterMap();
+	void ClearSymbolMap();
 	void ClearHuffmanTree();
-	void ClearTuples();
+	void ClearCodeTable();
 	bool GetSymbolMap(std::map<char, int> &);
 	void PrintCodeTable();
 	unsigned int GetGetAlphabetCount();
@@ -54,7 +54,7 @@ private:
 	void MapSymbol(char);
 	void MakeCodesFromTree();
 	void MakePrefixCodes(TreeNode *, string);
-	void SortTuples();
+	void SortCodeTable();
 	void WriteCompressedFileHeader(std::ofstream &);
 	void WriteCompressedFile(std::ifstream &, std::ofstream &);
 	bool ReadCompressedFileHeader(std::ifstream &);
