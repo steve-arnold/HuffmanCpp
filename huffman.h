@@ -79,7 +79,7 @@ private:
 
 	// Create a min heap using STL priority_queue. The 'compare' function, defined above, is ensuring
 	// that elements should be arranged according to frequency in the minheap.
-	priority_queue <TreeNode *, vector<TreeNode *>, compare> minheap;
+	priority_queue <TreeNode *, vector<TreeNode *>, compare> treeheap;
 
 	// create tuple map for final coding/decoding operation
 	// symbol, weight and prefix code as a string

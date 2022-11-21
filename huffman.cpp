@@ -33,23 +33,23 @@ unsigned long int HuffmanCode::MapSymbols(std::ifstream &fin)
 bool HuffmanCode::GrowHuffmanTree()
 {
 	//   struct TreeNode* leftpointer, * rightpointer;
-	//   priority_queue <TreeNode*, vector<TreeNode*>, compare> minheap;
+	//   priority_queue <TreeNode*, vector<TreeNode*>, compare> treeheap;
 
 	// For each character create a leaf node and insert each leaf node in the heap.
 	// Traverse the map
 	for (const auto& it : symbolmap) {
-		minheap.push(new TreeNode(it.first, it.second, true));
+		treeheap.push(new TreeNode(it.first, it.second, true));
 	}
 
 	// Iterate while size of min heap doesn't become 1
-	while (minheap.size() != 1)
+	while (treeheap.size() != 1)
 	{
 		//Extract two nodes from the heap.
-		leftpointer = minheap.top();
-		minheap.pop();
+		leftpointer = treeheap.top();
+		treeheap.pop();
 
-		rightpointer = minheap.top();
-		minheap.pop();
+		rightpointer = treeheap.top();
+		treeheap.pop();
 
 		// Create a new internal node having frequency equal to the sum of
 		// two extracted nodes.Assign symbol '\0' to this node and make the two extracted
@@ -58,7 +58,7 @@ bool HuffmanCode::GrowHuffmanTree()
 		TreeNode *tmp = new TreeNode('\0', leftpointer->weight + rightpointer->weight);
 		tmp->leftpointer = leftpointer;
 		tmp->rightpointer = rightpointer;
-		minheap.push(tmp);
+		treeheap.push(tmp);
 	}
 	MakeCodesFromTree();
 	SortCodeTable();
@@ -170,7 +170,7 @@ void HuffmanCode::ReadCompressedFile(std::ifstream &fin, std::ofstream &fout)
 	unsigned char code = 0;
 	unsigned long long int totalbytes = GetTotalCodedBits() / 8;  // number of complete bytes in the encoded file
 	unsigned char extrabits = GetTotalCodedBits() % 8;       // odd bits at the end og the file
-	TreeNode *node = minheap.top();
+	TreeNode *node = treeheap.top();
 	for (unsigned int i = 0; i < totalbytes; i++)
 	{
 		fin.get(inchar);
@@ -182,7 +182,7 @@ void HuffmanCode::ReadCompressedFile(std::ifstream &fin, std::ofstream &fout)
 			if (node->isleaf)
 			{
 				fout.write(&node->symbol, 1);
-				node = minheap.top();
+				node = treeheap.top();
 			}
 			inchar = inchar << 1;
 		}
@@ -198,7 +198,7 @@ void HuffmanCode::ReadCompressedFile(std::ifstream &fin, std::ofstream &fout)
 			if (node->isleaf)
 			{
 				fout.write(&node->symbol, 1);
-				node = minheap.top();
+				node = treeheap.top();
 			}
 			inchar = inchar << 1;
 		}
@@ -214,7 +214,7 @@ void HuffmanCode::ClearSymbolMap()
 // Clear the tree
 void HuffmanCode::ClearHuffmanTree()
 {
-	minheap = {};
+	treeheap = {};
 };
 
 // Clear all tuples
@@ -226,7 +226,7 @@ void HuffmanCode::ClearCodeTable()
 // Make the Huffman tree
 void HuffmanCode::MakeCodesFromTree()
 {
-	MakePrefixCodes(minheap.top(), "");
+	MakePrefixCodes(treeheap.top(), "");
 }
 
 // Generate Huffman Prefix Codes as strings
