@@ -20,7 +20,7 @@ struct TreeNode
 	char symbol;   // character
 	int weight;    // number of characters in file
 
-	TreeNode *leftpointer, * rightpointer; // pointers to left '0' node and right '1' node
+	TreeNode* leftpointer, * rightpointer; // pointers to left '0' node and right '1' node
 	// Constructor
 	TreeNode(char symbol, int weight, bool isleaf = false)
 	{
@@ -34,18 +34,18 @@ struct TreeNode
 class HuffmanCode
 {
 public:
-	HuffmanCode():
+	HuffmanCode() :
 		alphabetcount(0),
 		totalcharacters(0) {};
 
-	bool CompressFile(std::ifstream &fin, std::ofstream &fout);
-	bool ExpandFile(std::ifstream &fin, std::ofstream &fout);
-	unsigned long int MapSymbols(std::ifstream &);
+	bool CompressFile(std::ifstream& fin, std::ofstream& fout);
+	bool ExpandFile(std::ifstream& fin, std::ofstream& fout);
+	unsigned long int MapSymbols(std::ifstream&);
 	bool GrowHuffmanTree();
 	void ClearSymbolMap();
 	void ClearHuffmanTree();
 	void ClearCodeTable();
-	bool GetSymbolMap(std::map<char, int> &);
+	bool GetSymbolMap(std::map<char, int>&);
 	void PrintCodeTable();
 	unsigned int GetGetAlphabetCount();
 	unsigned long int GetTotalCharacters();
@@ -53,17 +53,17 @@ public:
 private:
 	void MapSymbol(char);
 	void MakeCodesFromTree();
-	void MakePrefixCodes(TreeNode *, string);
+	void MakePrefixCodes(TreeNode*, string);
 	void SortCodeTable();
-	void WriteCompressedFileHeader(std::ofstream &);
-	void WriteCompressedFile(std::ifstream &, std::ofstream &);
-	bool ReadCompressedFileHeader(std::ifstream &);
-	void ReadCompressedFile(std::ifstream &, std::ofstream &);
+	void WriteCompressedFileHeader(std::ofstream&);
+	void WriteCompressedFile(std::ifstream&, std::ofstream&);
+	bool ReadCompressedFileHeader(std::ifstream&);
+	void ReadCompressedFile(std::ifstream&, std::ofstream&);
 
 	// For comparison of two nodes.
 	struct compare
 	{
-		bool operator()(TreeNode *leftnode, TreeNode *rightnode)
+		bool operator()(TreeNode* leftnode, TreeNode* rightnode)
 		{
 			return (leftnode->weight > rightnode->weight);
 		}
@@ -79,7 +79,7 @@ private:
 
 	// Create a min heap using STL priority_queue. The 'compare' function, defined above, is ensuring
 	// that elements should be arranged according to frequency in the minheap.
-	priority_queue <TreeNode *, vector<TreeNode *>, compare> treeheap;
+	priority_queue <TreeNode*, vector<TreeNode*>, compare> treeheap;
 
 	// create tuple map for final coding/decoding operation
 	// symbol, weight and prefix code as a string
@@ -90,7 +90,7 @@ private:
 	// 'Character' represents the character and 'frequency', the number of times the character appears.
 	// There are also two pointers, 'leftpointer' and 'rightpointer' which, if we are an internal node,
 	// are storing the address of the node which is at the left and the right of the given node.
-	struct TreeNode *leftpointer = NULL, * rightpointer = NULL;
+	struct TreeNode* leftpointer = NULL, * rightpointer = NULL;
 
 	unsigned int alphabetcount = 0;
 	unsigned long int totalcharacters = 0;
