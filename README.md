@@ -7,8 +7,8 @@ minimum-redundancy code is one constructed in such a way that the average number
 ## Encoding process
 
 * Scan the input file to build up a list of symbols contained and the number of times each is present in the file (symbolmap)
-* Use symbolmap to build a priority queue containing the Huffman Tree (minheap)
-* Scan the Huffman tree and find all the leaf nodes and store symbol, weight and binary prefix code (as a string) and store in a tuple map(tTupleMap)
+* Use symbolmap to build a priority queue containing the Huffman Tree (symbolmap)
+* Scan the Huffman tree and find all the leaf nodes and store symbol, weight and binary prefix code (as a string) and store in a tuple map(codetable)
 * Sort the tuple with highest appearance characters given highest priority. (this step is not really needed)
 * Write a verification tag to the start of the compressed file.
 * Write the number of active symbols and the total input file length together with the symbolmap to the start of the output file.
