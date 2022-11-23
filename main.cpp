@@ -12,8 +12,38 @@ int main()
 	cout << "\t====================================";
 	cout << "\n\nEnter Name of File to Compress : ";
 	cin >> inputfile;
+
+	if (!filesystem::exists(inputfile))
+	{
+		cout << "Error !!! File does not exist.\n";
+		cin >> y;
+		exit(1);
+	}
 	// Create output file by replacing the input file extension with "cmp"
 	outputfile = inputfile.substr(0, inputfile.find_last_of('.')) + ".cmp";
+
+	try
+	{
+		const auto fsize = filesystem::file_size(inputfile);
+		std::cout << fsize << '\n';
+	}
+	catch (const filesystem::filesystem_error& err)
+	{
+		std::cerr << "filesystem error! " << err.what() << '\n';
+		if (!err.path1().empty())
+			std::cerr << "path1: " << err.path1().string() << '\n';
+		if (!err.path2().empty())
+			std::cerr << "path2: " << err.path2().string() << '\n';
+		cin >> y;
+		exit(1);
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << "general exception: " << ex.what() << '\n';
+		cin >> y;
+		exit(1);
+	}
+
 	fin.open(inputfile);
 	if (!fin.is_open())
 	{

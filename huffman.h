@@ -7,7 +7,8 @@
 #include <map>
 #include <fstream>
 #include <bitset>
-#include <filesystem>
+#include <chrono>
+#include <filesystem>  
 
 using namespace std;
 
@@ -40,7 +41,7 @@ public:
 
 	bool CompressFile(std::ifstream& fin, std::ofstream& fout);
 	bool ExpandFile(std::ifstream& fin, std::ofstream& fout);
-	unsigned long int MapSymbols(std::ifstream&);
+	size_t MapSymbols(std::ifstream&);
 	bool GrowHuffmanTree();
 	void ClearSymbolMap();
 	void ClearHuffmanTree();
@@ -48,8 +49,8 @@ public:
 	bool GetSymbolMap(std::map<char, int>&);
 	void PrintCodeTable();
 	unsigned int GetGetAlphabetCount();
-	unsigned long int GetTotalCharacters();
-	unsigned long long int GetTotalCodedBits();
+	uintmax_t GetTotalCharacters();
+	uintmax_t GetTotalCodedBits();
 private:
 	void MapSymbol(char);
 	void MakeCodesFromTree();
@@ -93,7 +94,7 @@ private:
 	struct TreeNode* leftpointer = NULL, * rightpointer = NULL;
 
 	unsigned int alphabetcount = 0;
-	unsigned long int totalcharacters = 0;
+	uintmax_t totalcharacters = 0;
 };
 
 

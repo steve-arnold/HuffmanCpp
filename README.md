@@ -31,8 +31,8 @@ This file is then expanded into "uncompressed.txt".<br>
 At both stages a print of the code table is made.
 
 ## Notes
-Uses features available in C++17 or later.<br>
-This program build on C++ version 14 under Visual Studio 2022.<br>
+Requires C++ 17 as it uses std::filesystem.<br>
+This program build on C++ version 17 under Visual Studio 2022.<br>
 Error checking is minimal.
 
 ## Source code

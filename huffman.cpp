@@ -14,8 +14,8 @@ bool HuffmanCode::CompressFile(std::ifstream& fin, std::ofstream& fout)
 	return result;
 };
 
-// Build a table of symbols in the file and the number of occurrances
-unsigned long int HuffmanCode::MapSymbols(std::ifstream& fin)
+// Build a table of symbols in the file and the number of occurrances (weight)
+size_t HuffmanCode::MapSymbols(std::ifstream& fin)
 {
 	totalcharacters = 0;
 	char ch;
@@ -51,10 +51,10 @@ bool HuffmanCode::GrowHuffmanTree()
 		rightpointer = treeheap.top();
 		treeheap.pop();
 
-		// Create a new internal node having frequency equal to the sum of
-		// two extracted nodes.Assign symbol '\0' to this node and make the two extracted
-		// nodes as left and right children of this new node. Add this node to the
-		// heap. By default 'leaf' will be false marking it as an internal node.
+		// Create a new internal node with weight equal to the sum of two extracted nodes.
+		// By default 'leaf' will be false marking it as an internal node.
+		// Assign symbol '\0' to this node and make the two extracted nodes as the left and right children. 
+		// Add this node to the heap. 
 		TreeNode* tmp = new TreeNode('\0', leftpointer->weight + rightpointer->weight);
 		tmp->leftpointer = leftpointer;
 		tmp->rightpointer = rightpointer;
@@ -163,7 +163,7 @@ bool HuffmanCode::ReadCompressedFileHeader(std::ifstream& fin)
 void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
 {
 	// Reposition start point past the header information
-	unsigned long startpos = (sizeof(filetag) + sizeof(alphabetcount) + sizeof(totalcharacters) + alphabetcount * (sizeof(char) + sizeof(int)));
+	size_t startpos = (sizeof(filetag) + sizeof(alphabetcount) + sizeof(totalcharacters) + alphabetcount * (sizeof(char) + sizeof(int)));
 	fin.seekg(startpos);
 	char inchar;
 	unsigned char mask = 0x80;
@@ -306,7 +306,7 @@ unsigned int HuffmanCode::GetGetAlphabetCount()
 };
 
 // Return total number of characters in the file
-unsigned long int HuffmanCode::GetTotalCharacters()
+uintmax_t HuffmanCode::GetTotalCharacters()
 {
 	return totalcharacters;
 };
@@ -314,7 +314,7 @@ unsigned long int HuffmanCode::GetTotalCharacters()
 
 
 // Return total number of bits in the coded file
-unsigned long long int HuffmanCode::GetTotalCodedBits()
+uintmax_t HuffmanCode::GetTotalCodedBits()
 {
 	size_t totalbits = 0;
 	for (const auto& it : codetable)
