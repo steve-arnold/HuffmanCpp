@@ -15,7 +15,7 @@ bool HuffmanCode::CompressFile(std::ifstream& fin, std::ofstream& fout)
 };
 
 // Build a table of symbols in the file and the number of occurrances (weight)
-size_t HuffmanCode::MapSymbols(std::ifstream& fin)
+uintmax_t HuffmanCode::MapSymbols(std::ifstream& fin)
 {
 	totalcharacters = 0;
 	char ch;
@@ -168,13 +168,13 @@ void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
 	char inchar;
 	unsigned char mask = 0x80;
 	unsigned char code = 0;
-	unsigned long long int totalbytes = GetTotalCodedBits() / 8;  // number of complete bytes in the encoded file
-	unsigned char extrabits = GetTotalCodedBits() % 8;       // odd bits at the end og the file
+	uintmax_t totalbytes = GetTotalCodedBits() / 8;		// number of complete bytes in the encoded file
+	unsigned char extrabits = GetTotalCodedBits() % 8;  // odd bits at the end og the file
 	TreeNode* node = treeheap.top();
-	for (unsigned int i = 0; i < totalbytes; i++)
+	for (uintmax_t index = 0; index < totalbytes; index++)
 	{
 		fin.get(inchar);
-		for (unsigned char j = 0; j < 8; j++)
+		for (unsigned char offset = 0; offset < 8; offset++)
 		{
 			code = (inchar & mask) ? 1 : 0;
 			// look up tree
@@ -190,7 +190,7 @@ void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
 	if (extrabits)  // any spare bits that are not a whole byte
 	{
 		fin.get(inchar);
-		for (unsigned char j = 0; j < extrabits; j++)
+        for (unsigned char offset = 0; offset < extrabits; offset++)
 		{
 			code = (inchar & mask) ? 1 : 0;
 			// look up tree
@@ -300,7 +300,7 @@ bool HuffmanCode::GetSymbolMap(map<char, int>& tempmap)
 };
 
 // Return number of symbols in the CharacterMap
-unsigned int HuffmanCode::GetGetAlphabetCount()
+uint16_t HuffmanCode::GetGetAlphabetCount()
 {
 	return alphabetcount;
 };

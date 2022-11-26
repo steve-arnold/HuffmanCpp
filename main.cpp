@@ -25,7 +25,7 @@ int main()
 	try
 	{
 		const auto fsize = filesystem::file_size(inputfile);
-		std::cout << fsize << '\n';
+//		std::cout << fsize << '\n';
 	}
 	catch (const filesystem::filesystem_error& err)
 	{

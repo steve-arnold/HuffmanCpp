@@ -41,14 +41,14 @@ public:
 
 	bool CompressFile(std::ifstream& fin, std::ofstream& fout);
 	bool ExpandFile(std::ifstream& fin, std::ofstream& fout);
-	size_t MapSymbols(std::ifstream&);
+	uintmax_t MapSymbols(std::ifstream&);
 	bool GrowHuffmanTree();
 	void ClearSymbolMap();
 	void ClearHuffmanTree();
 	void ClearCodeTable();
 	bool GetSymbolMap(std::map<char, int>&);
 	void PrintCodeTable();
-	unsigned int GetGetAlphabetCount();
+	uint16_t GetGetAlphabetCount();
 	uintmax_t GetTotalCharacters();
 	uintmax_t GetTotalCodedBits();
 private:
@@ -93,7 +93,7 @@ private:
 	// are storing the address of the node which is at the left and the right of the given node.
 	struct TreeNode* leftpointer = NULL, * rightpointer = NULL;
 
-	unsigned int alphabetcount = 0;
+	uint8_t alphabetcount = 0;
 	uintmax_t totalcharacters = 0;
 };
 
