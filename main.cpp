@@ -1,5 +1,7 @@
 #include "huffman.h"
 
+using namespace std;
+
 int main()
 {
 	int y;
@@ -64,7 +66,7 @@ int main()
 
 	tree.PrintCodeTable();
 	cout << "----------------------------------------------------------------------------------- " << endl;
-	cout << "Active characters: " << tree.GetGetAlphabetCount() << "\t\tTotal characters: " << tree.GetTotalCharacters() << endl;
+	cout << "Active characters: " << tree.GetAlphabetCount() << "\t\tTotal characters: " << tree.GetTotalCharacters() << endl;
 	cout << "----------------------------------------------------------------------------------- " << endl;
 	fin.close();
 	fout.close();
@@ -101,7 +103,7 @@ int main()
 
 	tree.PrintCodeTable();
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ " << endl;
-	cout << "Active characters: " << tree.GetGetAlphabetCount() << "\t\tTotal characters: " << tree.GetTotalCharacters() << endl;
+	cout << "Active characters: " << tree.GetAlphabetCount() << "\t\tTotal characters: " << tree.GetTotalCharacters() << endl;
 	cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ " << endl;
 
 	fin.close();

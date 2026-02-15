@@ -1,5 +1,6 @@
 #include "huffman.h"
 
+using namespace std;
 
 bool HuffmanCode::CompressFile(std::ifstream& fin, std::ofstream& fout)
 {
@@ -12,7 +13,7 @@ bool HuffmanCode::CompressFile(std::ifstream& fin, std::ofstream& fout)
 		result = true;
 	}
 	return result;
-};
+}
 
 // Build a table of symbols in the file and the number of occurrances (weight)
 uintmax_t HuffmanCode::MapSymbols(std::ifstream& fin)
@@ -27,7 +28,7 @@ uintmax_t HuffmanCode::MapSymbols(std::ifstream& fin)
 	fin.clear();
 	fin.seekg(0);
 	return totalcharacters;
-};
+}
 
 // Build Huffman Tree
 bool HuffmanCode::GrowHuffmanTree()
@@ -86,7 +87,7 @@ void HuffmanCode::WriteCompressedFileHeader(std::ofstream& fout)
 		int weight = it.second;
 		fout.write((const char*)&weight, sizeof(weight));
 	}
-};
+}
 
 void HuffmanCode::WriteCompressedFile(std::ifstream& fin, std::ofstream& fout)
 {
@@ -115,9 +116,9 @@ void HuffmanCode::WriteCompressedFile(std::ifstream& fin, std::ofstream& fout)
 			}
 		}
 	}
-};
+}
 
-bool HuffmanCode::HuffmanCode::ExpandFile(std::ifstream& fin, std::ofstream& fout)
+bool HuffmanCode::ExpandFile(std::ifstream& fin, std::ofstream& fout)
 {
 	if (!ReadCompressedFileHeader(fin))
 	{
@@ -157,7 +158,7 @@ bool HuffmanCode::ReadCompressedFileHeader(std::ifstream& fin)
 		symbolmap.insert(make_pair(tempsymbol, tempcount));
 	}
 	return true;
-};
+}
 
 // Process the compressed section of the file
 void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
@@ -209,19 +210,22 @@ void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
 void HuffmanCode::ClearSymbolMap()
 {
 	symbolmap = {};
-};
+}
 
 // Clear the tree
 void HuffmanCode::ClearHuffmanTree()
 {
-	treeheap = {};
-};
+	while (!treeheap.empty()) {
+		delete treeheap.top();
+		treeheap.pop();
+	}
+}
 
 // Clear all tuples
 void HuffmanCode::ClearCodeTable()
 {
 	codetable = {};
-};
+}
 
 // Make the Huffman tree
 void HuffmanCode::MakeCodesFromTree()
@@ -297,21 +301,19 @@ bool HuffmanCode::GetSymbolMap(map<char, int>& tempmap)
 		result = true;
 	}
 	return result;
-};
+}
 
 // Return number of symbols in the CharacterMap
-uint16_t HuffmanCode::GetGetAlphabetCount()
+uint16_t HuffmanCode::GetAlphabetCount()
 {
 	return alphabetcount;
-};
+}
 
 // Return total number of characters in the file
 uintmax_t HuffmanCode::GetTotalCharacters()
 {
 	return totalcharacters;
-};
-
-
+}
 
 // Return total number of bits in the coded file
 uintmax_t HuffmanCode::GetTotalCodedBits()
@@ -323,4 +325,4 @@ uintmax_t HuffmanCode::GetTotalCodedBits()
 		totalbits += (std::get<1>(it) * (std::get<2>(it)).length());
 	}
 	return totalbits;
-};
+}

@@ -10,8 +10,6 @@
 #include <chrono>
 #include <filesystem>  
 
-using namespace std;
-
 const char filetag[] = "SAC";  // compressed file validation tag
 
 // Structure and constructor for Huffman tree (min heap) node
@@ -48,13 +46,13 @@ public:
 	void ClearCodeTable();
 	bool GetSymbolMap(std::map<char, int>&);
 	void PrintCodeTable();
-	uint16_t GetGetAlphabetCount();
+	uint16_t GetAlphabetCount();
 	uintmax_t GetTotalCharacters();
 	uintmax_t GetTotalCodedBits();
 private:
 	void MapSymbol(char);
 	void MakeCodesFromTree();
-	void MakePrefixCodes(TreeNode*, string);
+	void MakePrefixCodes(TreeNode*, std::string);
 	void SortCodeTable();
 	void WriteCompressedFileHeader(std::ofstream&);
 	void WriteCompressedFile(std::ifstream&, std::ofstream&);
@@ -72,7 +70,7 @@ private:
 
 	// In 'symbolmap' we store each character which appears in the target file together with the
 	// number of times (frequency) each character appears. The symbol is used as the map key.
-	map<char, int> symbolmap;
+	std::map<char, int> symbolmap;
 
 	// Note: a Binary Heap can be either minheap or maxheap.
 	// In minheap, the tree is complete and the item at root must be minimum among all the items
@@ -80,11 +78,11 @@ private:
 
 	// Create a min heap using STL priority_queue. The 'compare' function, defined above, is ensuring
 	// that elements should be arranged according to frequency in the minheap.
-	priority_queue <TreeNode*, vector<TreeNode*>, compare> treeheap;
+	std::priority_queue <TreeNode*, std::vector<TreeNode*>, compare> treeheap;
 
 	// create tuple map for final coding/decoding operation
 	// symbol, weight and prefix code as a string
-	vector<tuple<unsigned char, int, std::string>> codetable;
+	std::vector<std::tuple<unsigned char, int, std::string>> codetable;
 
 
 	// In our minheap we will store a 'TreeNode' which contains two variables, 'character' and 'frequency'.
