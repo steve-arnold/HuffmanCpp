@@ -213,12 +213,33 @@ void HuffmanCode::ClearSymbolMap()
 }
 
 // Clear the tree
+// Safe recursive delete of nodes and clearing of the heap
+void HuffmanCode::DeleteTree(TreeNode* node)
+{
+	if (!node) return;
+	DeleteTree(node->leftpointer);
+	DeleteTree(node->rightpointer);
+	delete node;
+}
+
 void HuffmanCode::ClearHuffmanTree()
 {
-	while (!treeheap.empty()) {
-		delete treeheap.top();
+	if (treeheap.empty()) return;
+
+	if (treeheap.size() == 1) {
+		// treeheap.top() is the root of the full Huffman tree
+		DeleteTree(treeheap.top());
 		treeheap.pop();
 	}
+	else {
+		// heap contains standalone nodes (e.g. before tree built) — delete each
+		while (!treeheap.empty()) {
+			delete treeheap.top();
+			treeheap.pop();
+		}
+	}
+	// ensure heap is empty
+	while (!treeheap.empty()) treeheap.pop();
 }
 
 // Clear all tuples

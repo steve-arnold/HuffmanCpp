@@ -42,6 +42,7 @@ public:
 	uintmax_t MapSymbols(std::ifstream&);
 	bool GrowHuffmanTree();
 	void ClearSymbolMap();
+	void DeleteTree(TreeNode* node);
 	void ClearHuffmanTree();
 	void ClearCodeTable();
 	bool GetSymbolMap(std::map<char, int>&);
