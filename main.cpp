@@ -27,7 +27,6 @@ int main()
 	try
 	{
 		const auto fsize = filesystem::file_size(inputfile);
-//		std::cout << fsize << '\n';
 	}
 	catch (const filesystem::filesystem_error& err)
 	{
@@ -46,7 +45,8 @@ int main()
 		exit(1);
 	}
 
-	fin.open(inputfile);
+	// Open source in binary to avoid CRLF translation on Windows
+	fin.open(inputfile, ios::binary);
 	if (!fin.is_open())
 	{
 		cout << "Error !!! Cannot open Source file.\n";

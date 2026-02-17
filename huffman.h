@@ -45,13 +45,13 @@ public:
 	void DeleteTree(TreeNode* node);
 	void ClearHuffmanTree();
 	void ClearCodeTable();
-	bool GetSymbolMap(std::map<char, int>&);
+	bool GetSymbolMap(std::map<unsigned char, int>&);
 	void PrintCodeTable();
 	uint16_t GetAlphabetCount();
 	uintmax_t GetTotalCharacters();
 	uintmax_t GetTotalCodedBits();
 private:
-	void MapSymbol(char);
+	void MapSymbol(unsigned char);
 	void MakeCodesFromTree();
 	void MakePrefixCodes(TreeNode*, std::string);
 	void SortCodeTable();
@@ -71,25 +71,17 @@ private:
 
 	// In 'symbolmap' we store each character which appears in the target file together with the
 	// number of times (frequency) each character appears. The symbol is used as the map key.
-	std::map<char, int> symbolmap;
-
-	// Note: a Binary Heap can be either minheap or maxheap.
-	// In minheap, the tree is complete and the item at root must be minimum among all the items
-	// in the heap.This is recursively true for all the other nodes in the binary tree.
+	std::map<unsigned char, int> symbolmap;
 
 	// Create a min heap using STL priority_queue. The 'compare' function, defined above, is ensuring
 	// that elements should be arranged according to frequency in the minheap.
 	std::priority_queue <TreeNode*, std::vector<TreeNode*>, compare> treeheap;
 
 	// create tuple map for final coding/decoding operation
-	// symbol, weight and prefix code as a string
+	// symbol (unsigned char), weight and prefix code as a string
 	std::vector<std::tuple<unsigned char, int, std::string>> codetable;
 
 
-	// In our minheap we will store a 'TreeNode' which contains two variables, 'character' and 'frequency'.
-	// 'Character' represents the character and 'frequency', the number of times the character appears.
-	// There are also two pointers, 'leftpointer' and 'rightpointer' which, if we are an internal node,
-	// are storing the address of the node which is at the left and the right of the given node.
 	struct TreeNode* leftpointer = NULL, * rightpointer = NULL;
 
 	uint8_t alphabetcount = 0;
