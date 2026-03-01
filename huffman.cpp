@@ -83,7 +83,7 @@ bool HuffmanCode::GrowHuffmanTree()
 void HuffmanCode::WriteCompressedFileHeader(std::ofstream& fout)
 {
 	// Write the header verification tag and the character counts
-	fout.write((const char*)&filetag, sizeof(filetag));
+	fout.write(filetag, filetag_size);  // Write exactly 3 bytes for "SAC"
 	fout.write((const char*)&alphabetcount, sizeof(alphabetcount));
 	fout.write((const char*)&totalcharacters, sizeof(totalcharacters));
 
@@ -99,7 +99,7 @@ void HuffmanCode::WriteCompressedFileHeader(std::ofstream& fout)
 void HuffmanCode::WriteCompressedFile(std::ifstream& fin, std::ofstream& fout)
 {
 	// Build a fast lookup table from byte value to bitstring code
-	std::array<std::string, 256> codeLookup;
+	std::array<std::string, 256> codeLookup{};  // Initialize all to empty strings
 	for (const auto& t : codetable)
 	{
 		unsigned char c = std::get<0>(t);
@@ -151,13 +151,13 @@ bool HuffmanCode::ExpandFile(std::ifstream& fin, std::ofstream& fout)
 // Recover count numbers from front of file
 bool HuffmanCode::ReadCompressedFileHeader(std::ifstream& fin)
 {
-	int count = 0;
 	alphabetcount = 0;
 	totalcharacters = 0;
-	char temptag[sizeof(filetag)]{};
+
+	char temptag[filetag_size]{};
 	// Read verification tag
-	fin.read(const_cast<char*>(temptag), sizeof(filetag));
-	if (string(temptag) != string(filetag))
+	fin.read(temptag, filetag_size);
+	if (std::string(temptag, filetag_size) != std::string(filetag, filetag_size))
 	{
 		fin.close();
 		return false;
@@ -183,7 +183,7 @@ bool HuffmanCode::ReadCompressedFileHeader(std::ifstream& fin)
 void HuffmanCode::ReadCompressedFile(std::ifstream& fin, std::ofstream& fout)
 {
 	// Reposition start point past the header information
-	size_t startpos = (sizeof(filetag) + sizeof(alphabetcount) + sizeof(totalcharacters) + alphabetcount * (sizeof(char) + sizeof(int)));
+	size_t startpos = (filetag_size + sizeof(alphabetcount) + sizeof(totalcharacters) + alphabetcount * (sizeof(char) + sizeof(int)));
 	fin.seekg(startpos);
 
 	unsigned char inbyte;

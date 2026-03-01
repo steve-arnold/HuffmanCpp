@@ -10,7 +10,8 @@
 #include <chrono>
 #include <filesystem>  
 
-const char filetag[] = "SAC";  // compressed file validation tag
+const char filetag[] = "SAC";	// compressed file validation tag
+const int filetag_size = 3;		// Just "SAC"
 
 // Structure and constructor for Huffman tree (min heap) node
 struct TreeNode
