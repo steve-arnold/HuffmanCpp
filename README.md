@@ -37,9 +37,8 @@ Error checking is minimal.
 
 ## Source code
 
-This repository contains the following source code and data files:
+This repository contains the following source code files:
 
 * `huffman.cpp` - C++ programming language implementation.
 * `huffman.h`   - C++ header file.
 * `main.cpp`    - C++ programming language test program.
-* `12mb.txt`    - A text file for testing. (This code has been tested with a 300Mbyte text file)
