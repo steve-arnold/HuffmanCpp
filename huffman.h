@@ -1,14 +1,12 @@
 #if !defined(HUFFMAN_H_INCLUDED)
 #define HUFFMAN_H_INCLUDED
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
+#include <cstdint>
 #include <queue>
 #include <map>
 #include <fstream>
-#include <bitset>
-#include <chrono>
-#include <filesystem>  
+#include <string> 
+#include <utility>
+#include <vector>
 
 const char filetag[] = "SAC";	// compressed file validation tag
 const int filetag_size = 3;		// Just "SAC"
@@ -48,8 +46,8 @@ public:
 	void ClearCodeTable();
 	bool GetSymbolMap(std::map<unsigned char, int>&);
 	void PrintCodeTable();
-	uint16_t GetAlphabetCount();
-	uintmax_t GetTotalCharacters();
+	uint16_t GetAlphabetCount() const;
+	uintmax_t GetTotalCharacters() const;
 	uintmax_t GetTotalCodedBits();
 private:
 	void MapSymbol(unsigned char);

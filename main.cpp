@@ -1,4 +1,10 @@
 #include "huffman.h"
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <string>
+#include <cstdlib>
+#include <exception>
 
 using namespace std;
 

@@ -1,5 +1,16 @@
 #include "huffman.h"
 #include <array>
+#include <cstdio>
+#include <cstdint>
+#include <iostream>
+#include <queue>
+#include <map>
+#include <fstream>
+#include <bitset>
+#include <algorithm> 
+#include <string>
+#include <tuple>
+#include <utility>
 
 using namespace std;
 
@@ -288,7 +299,7 @@ void HuffmanCode::MakePrefixCodes(TreeNode* node, string str)
 }
 
 // Sort tuple by value of second element
-bool sortbysec(const std::tuple<unsigned char, int, std::string>& a, const std::tuple<unsigned char, int, std::string>& b)
+static bool sortbysec(const std::tuple<unsigned char, int, std::string>& a, const std::tuple<unsigned char, int, std::string>& b)
 {
 	return (get<1>(b) < get<1>(a));
 }
@@ -322,13 +333,13 @@ bool HuffmanCode::GetSymbolMap(map<unsigned char, int>& tempmap)
 }
 
 // Return number of symbols in the CharacterMap
-uint16_t HuffmanCode::GetAlphabetCount()
+uint16_t HuffmanCode::GetAlphabetCount() const
 {
 	return alphabetcount;
 }
 
 // Return total number of characters in the file
-uintmax_t HuffmanCode::GetTotalCharacters()
+uintmax_t HuffmanCode::GetTotalCharacters() const
 {
 	return totalcharacters;
 }
